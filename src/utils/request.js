@@ -1,103 +1,83 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
+import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
-import Vue from 'vue'
-import EventBus from '@/utils/bus'
-import qs from 'qs'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.VUE_APP_URL,
-  // withCredentials: true 
-  // send cookies when cross-domain requests
+  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
-
-service.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-
-
-let loading = {}
-function startLoading(el) {
-  if (!el) return
-  let target = document.querySelector(el)
-  if (!target || loading[el]) return
-  loading[el] = Vue.prototype.$loading({
-    lock: true,
-    target
-  })
-}
-
-function endLoading(el) {
-  if (el && loading[el]) {
-    loading[el].close()
-    delete loading[el]
-  }
-}
 
 // request interceptor
 service.interceptors.request.use(
   config => {
-    if(config.method === 'post' && config.data && !config.json) {
-      config.data = qs.stringify(config.data)
+    // do something before request is sent
+
+    if (store.getters.token) {
+      // let each request carry token
+      // ['X-Token'] is a custom headers key
+      // please modify it according to the actual situation
+      config.headers['X-Token'] = getToken()
     }
-    if(config.method === 'get') {
-      config.headers.get['Content-Type'] = 'application/json'
-    }
-    let token = store.getters.token
-    if (token) {
-      config.headers['Authorization'] = getToken()
-    }
-    startLoading(config.el)
     return config
   },
   error => {
     // do something with request error
-    startLoading(error.request.config.el)
+    console.log(error) // for debug
     return Promise.reject(error)
   }
 )
 
 // response interceptor
-let errorShowing = false
 service.interceptors.response.use(
+  /**
+   * If you want to get http information such as headers or status
+   * Please return  response => response
+  */
+
+  /**
+   * Determine the request status by custom code
+   * Here is just an example
+   * You can also judge the status by HTTP Status Code
+   */
   response => {
-    const res = response.data.data ? response.data.data : response.data
-    let config = response.config
-    endLoading(config.el)
-    let resFinal = res.rsp || res || {}
-    let code = resFinal.errorCode || resFinal.code
-    let message = resFinal.message || resFinal.errorMsg || resFinal.error || '接口错误'
-    if (code) {
-      if (code === 201) {
-        location.href = location.href.replace(/#.+/, '') + '#/login'
-        EventBus.$emit('cancelWS')
-        return
+    const res = response.data
+
+    // if the custom code is not 20000, it is judged as an error.
+    if (res.code !== 20000) {
+      Message({
+        message: res.message || 'Error',
+        type: 'error',
+        duration: 5 * 1000
+      })
+
+      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
+      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+        // to re-login
+        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
+          confirmButtonText: 'Re-Login',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          store.dispatch('user/resetToken').then(() => {
+            location.reload()
+          })
+        })
       }
-      if (code === 501) {
-        // !config.silence && !errorShowing && Message.error(message)
-        errorShowing = true
-        setTimeout(() => { errorShowing = false }, 3000)
-        store.dispatch('user/resetToken')
-        EventBus.$emit('cancelWS')
-        location.href = location.href.replace(/#.+/, '') + '#/login'
-        return
-      }
-      if (code !== 200) {
-        !config.silence && Message.error(message)
-        return Promise.reject(new Error(message))
-      }
+      return Promise.reject(new Error(res.message || 'Error'))
+    } else {
+      return res
     }
-    return res
   },
   error => {
     console.log('err' + error) // for debug
-    if (error.response) {
-      endLoading(error.response.config.el)
-      if (!error.response.config.silence) {
-        Message.error(error.message)
-      }
-    }
+    Message({
+      message: error.message,
+      type: 'error',
+      duration: 5 * 1000
+    })
     return Promise.reject(error)
   }
 )

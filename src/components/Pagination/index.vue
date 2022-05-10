@@ -1,112 +1,92 @@
 <template>
-  <!-- 分页 -->
-  <div class="pagination">
-    <span class="text" style="color: #c9caec; font-size: 14px"
-      >共查询{{ total }}条数据</span
-    >
+  <div :class="{'hidden':hidden}" class="pagination-container clearfix">
     <el-pagination
+      class="right"
+      :background="background"
+      :current-page="currentPage"
+      :page-size="pageSize"
+      :layout="layout"
+      :page-sizes="pageSizes"
+      :total="total"
+      v-bind="$attrs"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="pageSizes"
-      :page-size="limit"
-      layout="sizes, prev, pager, next,jumper"
-      :total="total"
-    >
-    </el-pagination>
+    />
   </div>
 </template>
+
 <script>
 export default {
+  name: "pagination",
   props: {
     total: {
       required: true,
-      type: Number,
-      default: 0,
+      type: Number
     },
-    page: {
+    pageNum: {
       type: Number,
-      default: 1,
+      default: 1
     },
-    pageSize: {
+    limit: {
       type: Number,
-      default: 10,
+      default: 20
     },
     pageSizes: {
       type: Array,
       default() {
-        return [5, 10, 20, 30, 40, 50];
-      },
+        return [10, 20, 30, 50];
+      }
     },
+    layout: {
+      type: String,
+      default: "total, sizes, prev, pager, next, jumper"
+    },
+    background: {
+      type: Boolean,
+      default: true
+    },
+    autoScroll: {
+      type: Boolean,
+      default: true
+    },
+    hidden: {
+      type: Boolean,
+      default: false
+    }
   },
+  
   computed: {
     currentPage: {
       get() {
-        return this.page;
+        return this.pageNum;
       },
-      set(val) {
-      },
+      set() {}
     },
-    limit: {
+    pageSize: {
       get() {
-        return this.pageSize;
+        return this.limit;
       },
-      set(val) {
-      },
-    },
+      set() {}
+    }
   },
   methods: {
     handleSizeChange(val) {
-      this.$emit("pagination", { page: this.currentPage, size: val });
+      this.$emit("pagination", { pageSize: val })
     },
+
     handleCurrentChange(val) {
-      // 解决有时切换每页显示条数时，偶尔会出现无数据的情况
-      setTimeout(() => {
-        this.$emit("pagination", { page: val, size: this.pageSize });
-      }, 0);
-    },
-  },
-};
-</script>
-<style lang="scss" scoped>
-.pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  &::v-deep .el-pagination {
-    margin-top: 0;
-    .el-input__inner {
-      color: #ffffff;
-      background: #17183c !important;
-      border: 1px solid #5e64ff;
-    }
-    .btn-prev,
-    .btn-next {
-      background: #17183c !important;
-      i {
-        font-size: 20px;
-        color: #c9caec;
-      }
-    }
-    .btn-prev[disabled~="disabled"],
-    .btn-next[disabled~="disabled"] {
-      i {
-        color: #72739b;
-        font-size: 20px;
-      }
-    }
-    // 数字按钮未选中样式
-    .el-pager li {
-      padding: 0;
-      background-color: unset;
-      color: #ffffff;
-    }
-    // 数字按钮选中样式
-    .el-pager li[class~="active"] {
-      padding: 0 !important;
-      background-color: #5e64ff !important;
-      border-radius: 4px !important;
+      this.$emit("pagination", { pageNum: val })
     }
   }
+};
+</script>
+
+<style scoped>
+.pagination-container {
+  background: #fff;
+  margin-top: 32px;
+}
+.pagination-container.hidden {
+  display: none;
 }
 </style>

@@ -6,48 +6,38 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || '视频智能分析平台' // page title
-const port = process.env.port || process.env.npm_config_port || 8886 // dev port
+const name = defaultSettings.title || 'vue Admin Template' // page title
 
-const rewriteDefaultConfig = {
-  // 目标 API 地址
-  // 本地测试地址:http://192.168.0.134:8083/analysis
-  // 生产环境地址:https://sppt.chfatech.com/analysis
-  target: 'http://192.168.0.134:8083/analysis',
-  // 如果要代理 websockets
-  ws: true,
-  // 将主机标头的原点更改为目标URL
-  changeOrigin: true,
-  pathRewrite: {
-    '^/api': ''
-  }
-  // onProxyRes: proxyResponse => {
-  //   if (proxyResponse.headers['set-cookie']) {
-  //     const cookies = proxyResponse.headers['set-cookie'].map(cookie =>
-  //       cookie.replace(/; secure/gi, '')
-  //     )
-  //     proxyResponse.headers['set-cookie'] = cookies
-  //   }
-  // }
-}
+// If your port is set to 80,
+// use administrator privileges to execute the command line.
+// For example, Mac: sudo npm run
+// You can change the port by the following methods:
+// port = 9528 npm run dev OR npm run dev --port = 9528
+const port = process.env.port || process.env.npm_config_port || 9528 // dev port
 
+// All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
-  publicPath: './',
+  /**
+   * You will need to set publicPath if you plan to deploy your site under a sub path,
+   * for example GitHub Pages. If you plan to deploy your site to https://foo.github.io/bar/,
+   * then publicPath should be set to "/bar/".
+   * In most cases please use '/' !!!
+   * Detail: https://cli.vuejs.org/config/#publicpath
+   */
+  publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
-  lintOnSave: false,
+  lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
+  // lintOnSave: false,//关闭eslint 检测
   devServer: {
-    index: 'index.html',
     port: port,
     open: true,
     overlay: {
       warnings: false,
       errors: true
     },
-    proxy: {
-      '/api': rewriteDefaultConfig
-    },
+    before: require('./mock/mock-server.js')
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
@@ -98,7 +88,7 @@ module.exports = {
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
             .use('script-ext-html-webpack-plugin', [{
-              // `runtime` must same as runtimeChunk name. default is `runtime`
+            // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
             .end()

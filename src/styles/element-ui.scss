@@ -4,10 +4,7 @@
 .el-breadcrumb__inner a {
   font-weight: 400 !important;
 }
-.el-breadcrumb__item:last-child .el-breadcrumb__inner, .el-breadcrumb__item:last-child .el-breadcrumb__inner a, .el-breadcrumb__item:last-child .el-breadcrumb__inner a:hover, .el-breadcrumb__item:last-child .el-breadcrumb__inner:hover,
-.app-breadcrumb.el-breadcrumb .no-redirect {
-  color: #2066F9!important;
-}
+
 .el-upload {
   input[type="file"] {
     display: none !important;
@@ -40,9 +37,6 @@
 }
 
 // dropdown
-.el-dropdown {
-  color: #fff;
-}
 .el-dropdown-menu {
   a {
     display: block
@@ -52,65 +46,4 @@
 // to fix el-date-picker css style
 .el-range-separator {
   box-sizing: content-box;
-}
-
-.el-pagination {
-  margin-top: 20px;
-}
-
-.el-tree {
-  background: rgba(249, 249, 249, 0.39);
-}
-.el-tree-node__content {
-  height: 40px;
-}
-.el-tree-node__expand-icon {
-  color: rgba(0, 98, 255, 0.39);
-}
-
-// button 
-.el-button--primary {
-  color: #fff;
-  background: #2066F9 !important;
-  opacity: 1;
-  border-radius: 4px;
-}
-
-.el-menu-item, .el-submenu__title {
-  font-size: 16px;
-  svg {
-    margin-right: 5px;
-  }
-  i {
-    color: #fff;
-  }
-}
-.el-submenu__icon-arrow {
-  right: 0;
-  top: 53%;
-}
-
-
-.el-scrollbar {
-  height: 100%;
-}
-
-.el-scrollbar__wrap {
-  overflow: scroll;
-  width: 110%;
-  height: 98%;
-}
-
-.el-table__body-wrapper::-webkit-scrollbar{
-  width: 2px;
-}
-.el-table__body-wrapper::-webkit-scrollbar-thumb{
-  border-radius: 2px;
-  height: 50px;
-  background: #eee;
-}
-.el-table__body-wrapper::-webkit-scrollbar-track{
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  border-radius: 2px;
-  background: rgba(0,0,0,0.4);
 }

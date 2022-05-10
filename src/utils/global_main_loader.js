@@ -1,16 +1,17 @@
 import Pagination from '@/components/Pagination/index.vue'
-import delids from '@/components/Del/index.vue'
-import echarts from 'echarts'
-import WS from '@/utils/websocket'
+import TableBase from '@/components/Table.vue'
+import ElementUI from 'element-ui'
 
 export default function performLoader(Vue) {
+  ////////////////////////////////////////////////////////////////////////
+  // thirdparty component
+  Vue.use(ElementUI)
+
+  ////////////////////////////////////////////////////////////////////////
   // self component
   function plugins(Vue) {
     Vue.component('Pagination', Pagination)
-    Vue.component('delids', delids)
+    Vue.component('TableBase', TableBase)
   }
   Vue.use(plugins)
-  Vue.prototype.$ws = WS
-  Vue.prototype.$echarts = echarts
-
 }

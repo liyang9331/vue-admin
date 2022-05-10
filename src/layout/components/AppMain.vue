@@ -1,15 +1,12 @@
 <template>
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
- <!-- <keep-alive include="Dashboard"> -->
       <router-view :key="key" />
-    <!-- </keep-alive> -->
     </transition>
   </section>
 </template>
 
 <script>
-
 export default {
   name: 'AppMain',
   computed: {
@@ -20,11 +17,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "~@/styles/variables.scss";
+
 .app-main {
-  background: #fff;
-  border-radius: 8px;
-  /*50 = navbar  */
+  /*107 = navbar 50 + topbar 57  */
+  min-height: calc(100vh - 107px);
+  width: 100%;
   position: relative;
   overflow: hidden;
 }

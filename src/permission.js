@@ -22,16 +22,17 @@ router.beforeEach(async(to, from, next) => {
 
   if (hasToken) {
     if (to.path === '/login') {
-      next({ path: '/' })
+      // if is logged in, redirect to the home page
+      next({ path: '/dashboard' })
       NProgress.done()
     } else {
-      const hasGetUserInfo = store.getters.userName
+      const hasGetUserInfo = store.getters.name
       if (hasGetUserInfo) {
         next()
       } else {
         try {
           // get user info
-          // await store.dispatch('user/getInfo')
+          await store.dispatch('user/getInfo')
 
           next()
         } catch (error) {
@@ -45,9 +46,12 @@ router.beforeEach(async(to, from, next) => {
     }
   } else {
     /* has no token*/
+
     if (whiteList.indexOf(to.path) !== -1) {
+      // in the free login whitelist, go directly
       next()
     } else {
+      // other pages that do not have permission to access are redirected to the login page.
       next(`/login?redirect=${to.path}`)
       NProgress.done()
     }
@@ -55,5 +59,6 @@ router.beforeEach(async(to, from, next) => {
 })
 
 router.afterEach(() => {
+  // finish progress bar
   NProgress.done()
 })

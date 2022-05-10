@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: "视频智能分析平台",
+  title: 'Vue Admin Template',
 
   /**
    * @type {boolean} true | false
@@ -12,5 +12,5 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar
    */
-  sidebarLogo: true
+  sidebarLogo: false
 }
