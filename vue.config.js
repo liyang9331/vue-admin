@@ -9,7 +9,7 @@ function resolve(dir) {
 
 const name = defaultSettings.title || '综合视频管理平台' // page title
 // 构建dist.zip 包名
-const packageName = `video-platform_测试_v3.0.0_${dayjs().format('YYYY年MM月DD日HH时mm分')}`
+const packageName = `前端包_测试_v1.0.0_${dayjs().format('YYYY年MM月DD日HH时mm分')}`
 // 将之前的plugins提出来封装成一个函数
 const webpack = require('webpack')
 const buildDate = JSON.stringify(new Date().toLocaleString())
