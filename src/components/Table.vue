@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="list" size="mini" v-bind="tableAttrs" v-on="events" ref="table">
+  <el-table class="table-fixed" :data="list" v-bind="tableAttrs" v-on="events" :height="heightBox" ref="table">
     <slot name="before"></slot>
     <el-table-column
       v-for="(column, index) in columns"
@@ -28,29 +28,50 @@
 import merge from 'lodash.merge'
 // table表头设置
 const tableDefaultConfig = {
-  border: true,
-  stripe: true,
+  border: false,
+  stripe: false,
   align: 'center',
   'header-cell-style': {
-    textAlign: 'center'
+    textAlign: 'center',
+    background: '#383838'
   },
   'cell-style': {
-    textAlign: 'center'
+    textAlign: 'center',
+    border: 0
   },
+  'highlight-current-row': true
 }
 
 export default {
-  props: ['columns', 'list', 'attrs', 'events'],
+  props: ['columns', 'list', 'attrs', 'events', 'heightBox'],
   computed: {
     tableAttrs() {
       return merge({}, tableDefaultConfig, this.attrs || {})
     }
-  },
+  }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .el-table :deep() th.gutter {
   display: table-cell !important;
 }
+.table-fixed {
+  & ::v-deep .el-table__fixed-right {
+    height: 100%!important;
+  }
+  & ::v-deep .el-table__fixed {
+    height: 100%!important;
+  }
+}
+::v-deep .el-table, .el-table__expanded-cell {
+  background-color: transparent!important;
+}
+::v-deep .el-table th, .el-table tr {
+  background-color: transparent!important;
+}
+::v-deep .el-table__body .el-table__row.hover-row td{
+  background-color: var(--table-hover-bg)!important;
+}
+
 </style>

@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "pagination",
+  name: 'Pagination',
   props: {
     total: {
       required: true,
@@ -34,12 +34,12 @@ export default {
     pageSizes: {
       type: Array,
       default() {
-        return [10, 20, 30, 50];
+        return [10, 20, 30, 50]
       }
     },
     layout: {
       type: String,
-      default: "total, sizes, prev, pager, next, jumper"
+      default: 'total, sizes, prev, pager, next, jumper'
     },
     background: {
       type: Boolean,
@@ -54,36 +54,33 @@ export default {
       default: false
     }
   },
-  
   computed: {
     currentPage: {
       get() {
-        return this.pageNum;
+        return this.pageNum
       },
       set() {}
     },
     pageSize: {
       get() {
-        return this.limit;
+        return this.limit
       },
       set() {}
     }
   },
   methods: {
     handleSizeChange(val) {
-      this.$emit("pagination", { pageSize: val })
+      this.$emit('pagination', { pageSize: val })
     },
-
     handleCurrentChange(val) {
-      this.$emit("pagination", { pageNum: val })
+      this.$emit('pagination', { pageNum: val })
     }
   }
-};
+}
 </script>
 
 <style scoped>
 .pagination-container {
-  background: #fff;
   margin-top: 32px;
 }
 .pagination-container.hidden {

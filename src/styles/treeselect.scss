@@ -1,0 +1,94 @@
+/**
+* vue-treeselect 全部style
+**/
+
+.vue-treeselect__control {
+  height: 26px !important;
+  font-size: 14px !important;
+}
+.vue-treeselect--has-value .vue-treeselect__multi-value {
+  margin-bottom: 0 !important;
+}
+.vue-treeselect__placeholder,
+.vue-treeselect__single-value {
+  top: 2px !important;
+  font-size: 14px !important;
+}
+.vue-treeselect--open-below:not(.vue-treeselect--append-to-body)
+  .vue-treeselect__menu-container {
+  top: 107% !important;
+}
+.vue-treeselect__menu {
+  font-size: 14px !important;
+}
+
+.vue-treeselect__control {
+  background: var(--public-bg) !important;
+  border: 1px solid var(--border) !important;
+}
+// 单选样式
+.vue-treeselect--single .vue-treeselect__option--selected {
+  background: #383737;
+}
+.vue-treeselect__label-container {
+  color: var(--public-text-color) !important;;
+}
+.vue-treeselect--single .vue-treeselect__option--selected:hover{
+  background: #383737;
+}
+.vue-treeselect__single-value {
+  color: #b9b9b9;
+}
+
+// 多选样式
+.vue-treeselect__multi-value-item-container {
+  padding: 0 !important;
+  margin-right: 8px !important;
+  vertical-align: text-top;
+}
+.vue-treeselect--multi .vue-treeselect__input {
+  color: var(--public-text-color);
+}
+.vue-treeselect__multi-value-item {
+  padding: 0 !important;
+  background: var(--public-bg) !important;
+  height: 26px !important;
+  line-height: 26px !important;
+  font-size: 14px !important;
+  color: #5272e8 !important;
+  border: 1px solid var(--border) !important;
+}
+.vue-treeselect__value-remove {
+  border-left: none !important;
+  color: #5272e8 !important;
+}
+
+.vue-treeselect__limit-tip-text {
+  color: #5272e8 !important;
+}
+.vue-treeselect__limit-tip {
+  padding-top: 2px !important;
+  background-color: var(--public-bg);
+  border: 1px solid #5272e8;
+  border-radius: 4px;
+  padding: 0 5px;
+  height: 28px;
+  line-height: 19px;
+}
+.vue-treeselect__input-container {
+  height: 26px;
+}
+.vue-treeselect__option--highlight {
+  background-color: var(--app-bg);
+  color: var(--public-text-color);
+}
+.vue-treeselect--open-below .vue-treeselect__menu {
+  background-color: var(--public-bg);
+  border: 1px solid var(--public-bg);
+}
+.vue-treeselect__option-arrow {
+  color: var(--tree-select-color);
+}
+.vue-treeselect__checkbox--unchecked {
+  color: var(--tree-select-color);
+}

@@ -25,13 +25,13 @@ import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
 
 export default {
+  name: 'Bbbbb',
   components: { SidebarItem, Logo },
   computed: {
     ...mapGetters([
       'sidebar'
     ]),
     routes() {
-      // return this.$router.options.routes
       return this.$store.state.permission.currentRoutes.children
     },
     activeMenu() {
@@ -41,7 +41,16 @@ export default {
       if (meta.activeMenu) {
         return meta.activeMenu
       }
-      return path
+      let newpath = null
+      if (path == '/application/alarmpage/alarm' || path == '/application/alarmpage/alarmHandle' ||
+      path == '/application/alarmpage/alarmInfo') {
+        newpath = '/application/alarmpage'
+      }
+      if (path == '/application/orderpage/order' || path == '/application/orderpage/orderHandle' ||
+      path == '/application/orderpage/olderInfo') {
+        newpath = '/application/orderpage'
+      }
+      return newpath == null ? path : newpath
     },
     showLogo() {
       return this.$store.state.settings.sidebarLogo

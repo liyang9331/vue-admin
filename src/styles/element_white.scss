@@ -1,0 +1,536 @@
+@import "./element-variables.scss";
+// cover some element-ui styles
+
+.el-breadcrumb__inner,
+.el-breadcrumb__inner a {
+  font-weight: 400 !important;
+}
+
+.el-upload {
+  input[type="file"] {
+    display: none !important;
+  }
+}
+
+.el-upload__input {
+  display: none;
+}
+
+.el-form.search-form {
+  .el-form-item {
+    margin-bottom: 10px;
+  }
+}
+
+// 覆盖全局文本输入框css
+.el-input__inner {
+  color: var(--public-text-color1) !important;
+  background-color: var(--sub-menu-bg) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.el-checkbox__inner {
+  background-color: transparent;
+}
+
+// 覆盖全局日期选择器css
+.el-date-picker {
+  background-color: var(--sub-menu-bg) !important;
+  border: 1px solid var(--border) !important;
+
+  & .popper__arrow::after {
+    border-bottom-color: var(--border) !important;
+  }
+  & td.disabled div {
+    background: transparent;
+  }
+
+  & .el-picker-panel__footer {
+    background: none;
+    border-top: 1px solid #363636;
+    & .el-picker-panel__link-btn {
+      background: var(--menu-show-box);
+      color: #FFFFFF;
+      border: var(--menu-show-box);
+    }
+  }
+
+  & .el-date-picker__time-header {
+    border-bottom: var(--border) !important;
+  }
+
+  // & .el-picker-panel__footer .el-button--text {
+  //   display: none;
+  // }
+
+  & .el-picker-panel__content .el-date-table th {
+    border-bottom: solid 1px #363636;
+  }
+
+}
+.el-picker-panel__icon-btn {
+  color: var(--border) !important;
+}
+// to fixed https://github.com/ElemeFE/element/issues/2461
+.el-dialog {
+  transform: none;
+  left: 0;
+  position: relative;
+  margin: 0 auto;
+}
+
+// 覆盖全局弹窗css
+.el-dialog {
+  background-color: var(--dialog-bg) !important;
+}
+
+.el-dialog__wrapper {
+  background-color: var(--dinlog) !important;
+}
+
+// refine element ui upload
+.upload-container {
+  .el-upload {
+    width: 100%;
+
+    .el-upload-dragger {
+      width: 100%;
+      height: 200px;
+    }
+  }
+}
+
+// dropdown
+.el-dropdown-menu {
+  a {
+    display: block
+  }
+}
+
+// 取消。重置 按钮
+.reset-btn {
+  background-color: var(--button-reset-bg);
+  border-color: #0080ff;
+  span {
+    color: var(--button-reset-color)!important;
+  }
+}
+.reset-btn:hover { // 鼠标悬浮
+  background-color: var(--button-reset-hover); 
+  border-color: #0080ff; 
+  span {
+    svg {
+      color: var(--button-reset-color)!important;
+    }
+  }
+}
+.reset-btn.is-disabled, 
+.reset-btn.is-disabled:hover,
+.reset-btn.is-disabled:focus {
+  background-color: var(--button-reset-bg); 
+}
+.reset-btn:focus { // 鼠标点击
+  background-color: var(--button-reset-bg); 
+  border-color: #0080ff; 
+}
+
+// to fix el-date-picker css style
+.el-range-separator {
+  box-sizing: content-box;
+}
+.el-tree-node__expand-icon.is-leaf {
+  visibility: hidden;
+}
+
+//表格内容颜色
+.el-table {
+  color:#b9b9b9;
+  background: var(--public-bg);
+  & .el-table__expanded-cell {
+    background-color: transparent;
+  }
+
+  & th, tr {
+    background-color: transparent;
+  }
+
+  & .el-table__header th{
+    background-color: var(--table-header) !important;
+    height: 38px;
+    color: var(--table-text);
+    border-bottom: none;
+  }
+  & .el-table__body tbody tr.hover-row>td {
+    background-color: transparent !important;
+  }
+  & .el-table__body tbody tr:nth-child(odd) {
+    color: var(--public-text-color);
+    background-color: var(--table-body_1);
+  } 
+  & .el-table__body tbody tr:nth-child(even) td {
+    color: var(--public-text-color);
+    background-color: var(--table-body_2);
+  }
+  & .el-table__empty-block{
+    background-color: var(--table-body_1) !important;
+  }
+  & .el-table__body-wrapper tr:hover>td {
+    background-color: transparent !important;
+  }
+}
+
+.el-form-item__label {
+  color: var(--public-text-color);
+}
+
+
+// 分页
+.el-pagination {
+  background-color: var(--pagination-bg) !important;
+  text-align: center;
+}
+
+.el-pagination.is-background .btn-next.disabled, .el-pagination.is-background .btn-next:disabled, .el-pagination.is-background .btn-prev.disabled, .el-pagination.is-background .btn-prev:disabled, .el-pagination.is-background .el-pager li.disabled {
+  background-color: #232323;
+  border: 1px solid var(--pagination-border);
+}
+
+.el-button--primary {
+  background-color: #0080FF!important;
+  color: #fff!important;
+  border: none;
+  span {
+    color: #fff!important;
+  }
+}
+.el-button--danger {
+  background-color: #FF0000!important;
+  color: #fff!important;
+  border: none;
+  span {
+    color: #fff!important;
+  }
+}
+// /*按钮的背景颜色样式*/
+.el-button--info {
+  background-color: var(--button-info-bg);
+  color: var(--button-info-text-clolr);
+  border: none;
+}
+/*鼠标经过*/
+.el-button--info:hover {
+  background-color: var(--button-info-hover);
+  & span {
+    color: #0080ff!important;
+  }
+}
+/*鼠标按下*/
+.el-button--info:focus {
+  background-color: var(--button-info-hover);
+  & span {
+    color: #0080FF!important;
+  }
+}
+
+// 表格操作列颜色
+
+.blue {
+  &::v-deep span {
+    color: #0080FF !important;
+  }
+}
+.orange {
+  &::v-deep span {
+    color: #FFB200 !important;
+  }
+}
+.red {
+  &::v-deep span {
+    color: #FF0D0D !important;
+  }
+}
+.green {
+  &::v-deep span {
+    color: #13C200  !important;
+  }
+}
+
+// 日月年切换
+.el-radio-group.radio_box {
+  .el-radio-button__inner {
+    border: none;
+    border: 1px solid var(--radio-select-border);
+    background: var(--radio-select-bg) ;
+  }
+  .el-radio-button__orig-radio:checked+.el-radio-button__inner {
+    border: 1px solid var(--radio-select-checked-border);
+    color: #fff !important;
+  }
+  .el-radio-button:first-child .el-radio-button__inner {
+    border-left: 1px solid var(--radio-select-border);
+    border-right: 1px solid var(--radio-select-border);
+  }
+  .el-radio-button__orig-radio:checked+.el-radio-button__inner {
+    background: #0080FF;
+    box-shadow: none;
+  }
+}
+
+// 切换通道树、轮巡组
+.el-radio-group.switch {
+  text-align: center;
+    .el-radio-button{
+      border-radius:4px;
+      .el-radio-button__inner {//修改按钮样式
+        background: var(--radio-switch-bg);
+        color:var(--radio-switch-text-clolr);
+        border: 1px solid var(--radio-switch-border) !important;
+      }
+      .el-radio-button__orig-radio:checked + .el-radio-button__inner {// 修改按钮激活样式
+        color: var(--radio-switch-checked-text-clolr) !important;
+        background-color: var(--radio-switch-checked-bg);
+        border-color: var(--radio-switch-checked-border);
+        box-shadow: -1px 0 0 0 var(--radio-switch-checked-border);
+      }
+    }
+  }
+
+.monitorTree {
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  padding: 11px 0 0 0;
+  background: var(--radio-switch-bg);
+  border-radius: 0px 0px 0px 0px;
+  opacity: 1;
+  & ::v-deep .el-radio-group {
+    text-align: center;
+  }
+  .el-divider--horizontal {
+    margin: 13px 0;
+    background-color:var(--divider-color);
+  }
+  .el-scrollbar__wrap {
+    background-color: var(--public-bg);
+    height: 100%;
+  }
+  .el-tree {
+    margin-top: 14px;
+    width: 100%;
+    overflow: auto;
+    // height: 460px;
+    background: var(--radio-switch-bg);
+    & .el-tree-node__content {
+      position: relative;
+      height: 38px!important;
+      margin-bottom: 1px;
+      background-color: var(--public-bg);
+      // border-bottom: 1px solid var(--tree-bg-border);
+    }
+    & .el-tree-node__content:hover, .el-tree-node.is-current > .el-tree-node__content
+    {
+      background: var(--tree-content-hover-border) !important;
+      & span {
+        color: var(--public-text-color2) !important;
+      }
+    }
+  }
+  .text_hide {
+    width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+// 实时监控的控制台
+.video_control_Bg {
+  background: var(--public-bg1);
+}
+
+// 树的颜色
+.el-tree.treeBg {
+  background: var(--radio-switch-bg);
+  border: 1px solid var(--tree-bg-border);
+  & .el-tree-node__content {
+    height: 40px!important;
+    background-color: var(--public-bg1);
+    margin-bottom: 2px;
+    border-bottom: 1px solid var(--tree-bg-border);
+  }
+  & .el-tree-node > .el-tree-node__content:hover{
+    background-color: var(--tree-content-hover-border);
+  }
+  & .el-tree-node.is-current > .el-tree-node__content{
+    background-color: var(--tree-content-hover-border);
+  }
+  & .el-tree-node__label {
+    font-size: 16px;
+  }
+}
+
+.textBtn span {
+  color: var(--public-text-color2) !important;;
+}
+
+.cardBg {
+  background-color: var(--app-bg);
+}
+
+// 资源卡片背景
+.sourceBg {
+  background: var(--radio-switch-bg);
+  p, span {
+    color: var(--public-text-color2) !important;
+  }
+  .el-button--primary span {
+    color:#fff!important;
+  }
+}
+
+// 普通card背景
+.ordinaryBg { 
+  background: var(--public-bg1);
+}
+
+.info_header {
+  color: var(--info-title) !important;
+}
+.info_text {
+  color: var(--info-text) !important;
+}
+
+.el-color-picker__panel {
+  background: var(--color-picker-panel);
+}
+.el-color-picker--small .el-color-picker__trigger {
+  width: 50px;
+}
+
+.alarm-tips {
+  background: var(--alarm-tips-bg);
+  div {
+    color: var(--alarm-tips-text);
+  }
+}
+
+//数据看板中的点
+.leaflet-div-icon {
+  background: rgba(94,100,255, 1)!important;
+  border: none!important;
+  border-radius: 100%!important;
+  width: 18px;
+  height: 18px;
+}
+.live {
+  position: relative;
+  // left: 40%;
+  border-radius: 50%;
+  // background-color: rgba(94,100,255, 1) ;
+  // box-shadow: 1px 1px 8px 0 rgba(0, 0, 0, 0.75);
+  // animation: living 3s linear infinite;
+  img {
+    width: 18px;
+    height: 18px;
+  }
+  span{
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 0;
+    // top: 0;
+    border: 1px solid #5E64FF;
+    border-radius: 50%;
+    animation: living 3s linear infinite;
+    z-index: 50;
+  }
+}
+@keyframes living {
+  0% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.5);
+    border-color: #5E64FF;
+    opacity: 0.9;
+  }
+
+  50% {
+    transform: scale(1.7);
+    border-color: #5E64FF;
+    opacity: 0.75;
+  }
+
+  75% {
+    transform: scale(2);
+    border-color: #5E64FF;
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale(2.5);
+    border-color: #5E64FF;
+    opacity: 0.1;
+  }
+}
+// 自定义leaflet-popup
+.custom .leaflet-popup-tip-container.leaflet-popup-tip-container {
+  display: none;
+}
+.custom .leaflet-popup-close-button.leaflet-popup-close-button {
+  display: none;
+}
+.custom .leaflet-popup-tip,
+.custom .leaflet-popup-content-wrapper {
+  background: var(--map-popup-bg);
+  padding: 6px;
+  // color: #ffffff;
+  .leaflet-popup-content {
+    min-width: 20px;
+    width:max-content!important;
+    margin: 0;
+    // padding: 12px;
+  }
+}
+
+.btn-group {
+  .btn {
+    background: var(--btn-group-bg);
+    span {
+      color: var(--table-text)!important;
+    }
+  }
+}
+
+// 实时监控中的屏幕切换
+.el-radio-group.screen_group {
+  .el-radio-button {
+    border-radius: 4px;
+    .el-radio-button__inner {
+      //修改按钮样式
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      & > svg {
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+      background: var(--public-bg);
+      color: var(--svg-color);
+      border: 0 !important;
+    }
+    .el-radio-button__orig-radio:checked + .el-radio-button__inner {
+      // 修改按钮激活样式
+      & > svg {
+        color: #0080ff !important;
+      }
+      color: #0080ff !important;
+      border-color: var(--public-bg);
+      box-shadow: -1px 0 0 0 var(--public-bg);
+    }
+  }
+}
+
+.watermark {
+  position: absolute;
+  z-index: 99999;
+}

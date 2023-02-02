@@ -1,12 +1,237 @@
-// sidebar
 $sideBarWidth: 210px;
-$contentHeight: calc(100vh - 56px);
-$appBg:#161616;
+$mainLeft: 216px;
+$topBarHeight: 60px;
+$sidebarTop: 66px;
+$logoWidth: 340px;
+$contentHeight: calc(100vh - 6px); // calc(100vh - 60px);
 
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
 :export {
   sideBarWidth: $sideBarWidth;
+  mainLeft: $mainLeft;
+  topBarHeight: $topBarHeight;
+  sidebarTop: $sidebarTop;
+  logoWidth: $logoWidth;
   contentHeight:$contentHeight;
-  appBg:$appBg;
+}
+
+:root[theme='white'] {
+  --app-bg: #f1f1f1; // app背景
+
+  --menu-text: #C3D3E2; // 菜单文字
+  --menu-active-text: #fff; // 菜单激活文字
+  --menu-show-box: #0080FF; // 菜单盒子颜色
+  --menu-bg: #FFF; // 菜单背景
+  --menu-hover: #0052A4; // 菜单经过背景
+
+  --sub-menu-text: #666666; // 子菜单字体颜色
+  --sub-menu-active-text: #FFFFFF; // 子菜单激活文字颜色
+  --sub-menu-bg: #FFFFFF; // 子菜单背景
+  --sub-menu-hover: #0080FF; // 子菜单经过背景 这个好多地方用到， 没有仔细摘过。先不动。
+
+  --sub-menu-hover-bg: rgba(0,128,255,0.1); // 子菜单经过背景
+  --sub-menu-hover-color: #0080FF; // 子菜单经过背景
+
+  --top-nav-bg: #004992;
+  --top-nav-menu-horizontal-bg: #fff;
+  --border: #BEBEBE;
+  --time-axios-bG: #424956;
+  --public-bg: #fff;
+  --public-bg1: #fff;
+  --public-bg2: #B5B5B5;
+  --public-text-color: #666;
+  --public-text-color1: #333;
+  --public-text-color2: #666;
+  --public-border-color: #BEBEBE;
+  --svg-color: #666; //全局svg 图标颜色 #B1B1B1
+
+  --divider-color: #DEDEDE;
+
+  --select-dropdown-bg: #fff;
+  --select-item-hover-bg: #f6f6f6;
+  --select-item-text-color: #666;
+
+  --button-info-bg: #fff;
+  --button-info-text-clolr: #666666;
+  --button-info-hover: #E5F2FF;
+  --button-reset-bg: #fff;
+  --button-reset-hover: #fff;
+  --button-reset-color: #0080ff;
+  --upload-bg: #eee; //文件上传按钮背景色
+
+  --radio-select-bg: #EAEAEA; // 年月日切换radio背景
+  --radio-select-border: #EAEAEA; // 年月日切换radio边框
+  --radio-select-checked-border: #0080FF; // 年月日切换radio选中
+
+  --radio-switch-bg: #fff; // 通道轮询切换radio
+  --radio-switch-border: #DFDFDF; // 通道轮询切换边框
+  --radio-switch-text-clolr: #DFDFDF; // 通道轮询切换文字
+  --radio-switch-checked-bg: #0080FF; // 通道轮询切换选中
+  --radio-switch-checked-border: #0080FF; // 通道轮询切换选中边框
+  --radio-switch-checked-text-clolr: #fff; // 通道轮询切换选中文字
+
+  --pagination-border: #737373; //分页按钮边框
+  --pagination-bg: #fff; //分页背景
+
+  --lable-color: #333; //lable 字体颜色
+  --dinlog: rgba(0, 0, 0, 0.3);
+  --dialog-bg: #fff; // 弹窗背景
+  --breadcrumb: #666666; // Breadcrumb 背景色
+
+  --table-header: #ebebeb; // 表格表头
+  --table-body_1: #f6f6f6; //表格-body背景色-1
+  --table-body_2: #e6e6e6; // 表格-body背景色-2
+  --table-hover-bg: #f2f2f2; // 表格-hover
+  --table-text: #333;
+
+  --tree-bg-border: #ebebeb;
+  --tree-content-border: #ebebeb;
+  --tree-content-hover-border: #efefef;
+
+  --yuntai-arrow-bg: #fff;
+  --yuntai-arrow-border: #0080FF;
+
+  // 实时告警卡片及字体
+  --arraw-color: #C8C8C8; // 箭头颜色
+  --after-clolr: #000;
+  --item-t1: #666;
+  --item-t2: #0080ff;
+  --info-title: #333;
+  --info-text: #666;
+
+  --tree-select-color: #333;
+  --color-picker-panel: #fff;
+
+  --alarm-tips-bg: #fff;
+  --alarm-tips-text: #666;
+
+  --alarm-boder-color: #e1e1e1; // 告警管理边框
+  --alarm-item-bg: #f3f3f3; // 告警管理tips bg
+  --alarm-item-text-color: #666; // 告警管理tips 字体
+  --alarm-handle-level-color: linear-gradient(90deg, #FF0000 0%, #FFFFFF 100%);
+  --alarm-handle-border-color: #CFCFCF;
+
+  --btn-group-bg: #AFAFAF;
+
+  --map-popup-bg: #fff;
+
+  // 运维
+  --equiement-after-color: #e1e1e1;
+  --operations-text-color: #666;
+
+
+  // 滚动条颜色
+  --scroll-line-color: #ACACAC;
+}
+
+:root[theme='black'] {
+  --app-bg: #161616; // app背景
+
+  --menu-text: #B9B9B9; // 菜单文字
+  --menu-active-text: #FFFFFF; // 菜单激活文字
+  --menu-show-box: #0080FF; // 菜单盒子颜色
+  --menu-bg: #232323; // 菜单背景
+  --menu-hover: #161616; // 菜单经过背景
+
+  --sub-menu-text: #999; // 子菜单字体颜色
+  --sub-menu-active-text: #fff; // 子菜单激活文字颜色
+  --sub-menu-bg: #232323; // 子菜单背景
+  --sub-menu-hover: #0080FF; // 子菜单经过背景 这个好多地方用到， 没有仔细摘过。先不动。
+
+  --sub-menu-hover-bg: rgba(0,128,255,0.4); // 子菜单经过背景
+  --sub-menu-hover-color: #fff; // 子菜单经过文字颜色
+
+  --top-nav-bg: #232323;
+  --top-nav-menu-horizontal-bg: #232323;
+  --border: #5e5e5e;
+  --time-axios-bG: #424956;
+  --public-bg: #313131;
+  --public-bg1: #232323;
+  --public-bg2: #777;
+  --public-text-color: #d1d1d1;
+  --public-text-color1: #fff;
+  --public-text-color2: #fff;
+  --public-border-color: #5E5E5E;
+  --svg-color: #B1B1B1; //全局svg 图标颜色 #B1B1B1
+
+  // 分割线
+  --divider-color: #363636;
+
+  --select-dropdown-bg: #4e4e4e;
+  --select-item-hover-bg: #333;
+  --select-item-text-color: #fff;
+
+  // 按钮
+  --button-info-bg: #232323;
+  --button-info-text-clolr: #b9b9b9;
+  --button-info-hover: #161616;
+  --button-reset-bg: #232323;
+  --button-reset-hover: #0080FF;
+  --button-reset-hover: #0080FF;
+  --button-reset-color: #fff;
+  --upload-bg: #202020; //文件上传按钮背景色
+
+  --radio-select-bg: #161616; // 年月日切换radio背景
+  --radio-select-border: #313131; // 年月日切换radio边框
+  --radio-select-checked-border: #111032; // 年月日切换radio选中
+
+  --radio-switch-bg: #232323; // 通道轮询切换radio
+  --radio-switch-border: #313131; // 通道轮询切换边框
+  --radio-switch-text-clolr: #B9B9B9; // 通道轮询切换文字
+  --radio-switch-checked-bg: #161616; // 通道轮询切换选中
+  --radio-switch-checked-border: #161616; // 通道轮询切换选中边框
+  --radio-switch-checked-text-clolr: #0080FF; // 通道轮询切换选中文字
+
+  --pagination-border: #737373; //分页按钮边框
+  --pagination-bg: #232323; //分页背景
+
+  --lable-color: #B9B9B9; //lable 字体颜色
+  --dinlog: rgba(0, 0, 0, 0.3);
+  --dialog-bg: #161616; // 弹窗背景
+  --breadcrumb: #999; // Breadcrumb 背景色
+
+  --table-header: #383838; // 表格表头
+  --table-body_1: #232323; //表格-body背景色-1
+  --table-body_2: #191919; // 表格-body背景色-2
+  --table-hover-bg: #444; // 表格-hover
+  --table-text: #fff;
+
+  --tree-bg-border: #707070;
+  --tree-content-border: #4e4e4e;
+  --tree-content-hover-border: #4e4e4e;
+
+  --yuntai-arrow-bg: #141414;
+  --yuntai-arrow-border: #141414;
+
+  // 实时告警卡片及字体
+  --arraw-color: #fff; // 箭头颜色
+  --after-clolr: #fff;
+  --item-t1: #dcddff;
+  --item-t2: #4eb2ff;
+  --info-title: #b9b9b9;
+  --info-text: #fff;
+
+  --tree-select-color: #D1D1D1;
+  --color-picker-panel: #3A3A3A;
+
+  --alarm-tips-bg: #000;
+  --alarm-tips-text: #fff;
+
+  --alarm-boder-color: #737373; // 告警管理边框
+  --alarm-item-bg: #4c4c4c; // 告警管理tips bg
+  --alarm-item-text-color: #b9b9b9; // 告警管理tips 字体
+  --alarm-handle-level-color: linear-gradient(90deg, #FF0000 0%, #232323 100%); // 告警管理状态过渡背景
+  --alarm-handle-border-color: #313131;
+
+  --btn-group-bg: #AFAFAF;
+
+  --map-popup-bg: #444;
+
+  // 运维
+  --equiement-after-color: #3b3b3b; // 运维卡片分割线
+  --operations-text-color: #b9b9b9; // 统计分析top10字体颜色
+
+  // 滚动条颜色
+  --scroll-line-color: #334E87;
 }

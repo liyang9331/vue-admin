@@ -1,8 +1,7 @@
-export default function EditMixinFactory (option) {
+export default function EditMixinFactory(option) {
   let {
     defaultText = '',
     formInit,
-    formParse = (obj) => obj,
     apiMap,
     rules = {}
   } = option
@@ -10,7 +9,7 @@ export default function EditMixinFactory (option) {
   if (typeof apiMap === 'function') {
     apiMap = {
       1: apiMap, // create
-      2: apiMap  // edit
+      2: apiMap // edit
     }
   }
   return {
@@ -18,7 +17,7 @@ export default function EditMixinFactory (option) {
       return {
         form: formInit(),
         visible: false,
-        rules,
+        rules
       }
     },
     computed: {
@@ -42,8 +41,14 @@ export default function EditMixinFactory (option) {
         handler(newV) {
           this.visible = !!newV
           this.form = formInit(this.curInfo)
-        },
+        }
       },
+      curInfo: {
+        immediate: true,
+        handler(newV) {
+          this.form = formInit(newV)
+        }
+      }
     },
     methods: {
       reset(needRefresh, options = {}) {
@@ -55,15 +60,19 @@ export default function EditMixinFactory (option) {
         this.reset()
       },
       confrim() {
-        let api = apiMap[this.flag]
+        const api = apiMap[this.flag]
         this.$refs['form'].validate(valid => {
-          let params = formParse({
+          const params = {
             ...this.form
-          })
+          }
           if (valid) {
             api(params).then((res) => {
-              this.$message.success('操作成功')
-              this.reset(true, res)
+              if (res.status == 200) {
+                this.$message.success('操作成功')
+                this.reset(true, res)
+              } else {
+                this.$message.warning(res.message)
+              }
             })
           }
         })

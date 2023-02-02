@@ -1,155 +1,151 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
 /* Layout */
 import Layout from '@/layout'
+// import alarmLayout from '@/views/application/alarm/index.vue'
 
-export const constantRoutes = [
+// 所有权限通用路由表
+export const constantRouterMap = [
+  /* 刷新 */
+  {
+    path: '/refresh',
+    component: () => import('@/views/refresh/index'),
+    hidden: true
+  },
+  /* 登录 */
   {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
-  },
-
+  }
+]
+// 异步挂载的路由
+// 动态需要根据权限加载的路由表
+export const asyncRouterMap = [
   {
-    path: '/application',
+    path: '/resources',
     component: Layout,
-    redirect: '/application/monitoring',
-    name: 'application',
-    meta: { title: '应用中心', icon: 'table' },
+    redirect: '/resources/algorithm',
+    name: 'resources',
+    meta: { title: '资源管理', icon: 'databoard' },
     children: [
       {
-        path: 'monitoring',
-        name: 'monitoring',
-        component: () => import('@/views/application/template/index'),
-        meta: { title: '实时监控', icon: 'dashboard' }
-      },
-      {
-        path: 'electronicMap',
-        name: 'electronicMap',
-        component: () => import('@/views/application/template/index'),
-        meta: { title: '电子地图', icon: 'dashboard' }
-      },
-      {
-        path: 'videoBack',
-        name: 'videoBack',
-        component: () => import('@/views/application/video-back/index'),
-        meta: { title: '录像回放', icon: 'dashboard' }
-      },
-      {
-        path: 'alarm',
-        name: 'alarm',
-        component: () => import('@/views/application/template/index'),
-        meta: { title: '告警管理', icon: 'dashboard' }
-      },
-      {
-        path: 'order',
-        name: 'order',
-        component: () => import('@/views/application/template/index'),
-        meta: { title: '工单管理', icon: 'dashboard' }
-      },
-      {
-        path: 'cloudLibrary',
-        name: 'cloudLibrary',
-        component: () => import('@/views/application/template/index'),
-        meta: { title: '云端库', icon: 'dashboard' }
-      },
-    ]
-  },
-
-  {
-    path: '/configure',
-    component: Layout,
-    redirect: '/configure/region',
-    name: 'configure',
-    meta: { title: '配置中心', icon: 'table' },
-    children: [
-      {
-        path: 'region',
-        name: 'region',
-        component: () => import('@/views/configure/template/index'),
-        meta: { title: '区域管理', icon: 'table' }
+        path: 'algorithm',
+        name: 'algorithm',
+        component: () => import('@/views/resources/algorithm/index'),
+        meta: { title: '算法模型管理', icon: 'dataOverview' }
       },
       {
         path: 'equipment',
         name: 'equipment',
-        component: () => import('@/views/configure/template/index'),
-        meta: { title: '设备管理', icon: 'tree' }
-      },
-      {
-        path: 'mapping',
-        name: 'mapping',
-        component: () => import('@/views/configure/template/index'),
-        meta: { title: '地图绘制', icon: 'tree' }
-      },
-      {
-        path: 'label',
-        name: 'label',
-        component: () => import('@/views/configure/template/index'),
-        meta: { title: '标签管理', icon: 'tree' }
-      },
-      // {
-      //   path: 'tree',
-      //   name: 'Tree',
-      //   component: () => import('@/views/tree/index'),
-      //   meta: { title: '电视墙配置', icon: 'tree' }
-      // },
-      {
-        path: 'alarmConfiguration',
-        name: 'alarmConfiguration',
-        component: () => import('@/views/configure/template/index'),
-        meta: { title: '告警配置', icon: 'tree' }
-      },
-      {
-        path: 'cloudStorage',
-        name: 'cloudStorage',
-        component: () => import('@/views/configure/template/index'),
-        meta: { title: '云存储配置', icon: 'tree' }
-      },
-    ]
-  },
-
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu',
-    name: 'Nested',
-    meta: { title: '运维中心', icon: 'nested'},
-    children: [
-      {
-        path: 'menu',
-        component: () => import('@/views/nested/template/index'), // Parent router-view
-        name: 'Menu',
-        meta: { title: 'Menu' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/template/index'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-        ]
+        component: () => import('@/views/resources/equipment/index'),
+        meta: {
+          title: '设备信息管理',
+          icon: 'equipmentSvg'
+        }
       }
     ]
   },
-  // 默认打开路由
-  { path: '*', redirect: '/application/monitoring', hidden: true },
-  // 404 page must be placed at the end !!!
+  {
+    path: '/dispatch',
+    component: Layout,
+    redirect: '/dispatch/taskScheduling',
+    name: 'dispatch',
+    meta: { title: '调度管理', icon: 'databoard' },
+    children: [
+      {
+        path: 'taskScheduling',
+        name: 'taskScheduling',
+        component: () => import('@/views/dispatch/taskScheduling/index'),
+        meta: {
+          title: '任务调度管理',
+          icon: 'equipmentSvg'
+        }
+      },
+      {
+        path: 'resultsEnforcement',
+        name: 'resultsEnforcement',
+        component: () => import('@/views/dispatch/resultsEnforcement/index'),
+        meta: {
+          title: '执行结果管理',
+          icon: 'equipmentSvg'
+        }
+      }
+    ]
+  },
+  {
+    path: '/system',
+    component: Layout,
+    redirect: '/system/region',
+    name: 'system',
+    meta: {
+      title: '系统管理',
+      icon: 'system'
+    },
+    children: [
+      {
+        path: 'region',
+        name: 'region',
+        component: () => import('@/views/system/region/index'),
+        meta: {
+          title: '区域管理',
+          icon: 'organization'
+        }
+      },
+      {
+        path: 'organization',
+        name: 'organization',
+        component: () => import('@/views/system/organization/index'),
+        meta: {
+          title: '账号管理',
+          icon: 'organization'
+        }
+      },
+      {
+        path: 'role',
+        name: 'role',
+        component: () => import('@/views/system/role/index'),
+        meta: {
+          title: '角色管理',
+          icon: 'role'
+        }
+      },
+      {
+      /**
+         * 可见模块配置是内部权限，客户没有权限，用来做为动态模块集成使用
+         */
+        path: 'visibleModule',
+        name: 'visibleModule',
+        component: () => import('@/views/system/visibleModule/index'),
+        meta: {
+          title: '可见模块配置',
+          icon: 'cloud'
+        }
+      }
+    ]
+  },
   {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
-  },
+  }
 ]
 
-const createRouter = () => new Router({
+// 创建基础路由表函数
+const createRouter = () => new VueRouter({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  mode: 'hash',
+  // base:"",
+  scrollBehavior: () => ({
+    y: 0
+  }),
+  routes: constantRouterMap
 })
 
+// 将创建基础路由表函数赋予 router
 const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465

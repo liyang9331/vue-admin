@@ -1,0 +1,363 @@
+@import "./element-variables.scss";
+// cover some element-ui styles
+
+.el-breadcrumb__inner,
+.el-breadcrumb__inner a {
+  font-weight: 400 !important;
+}
+
+.el-upload {
+  input[type="file"] {
+    display: none !important;
+  }
+}
+
+.el-upload__input {
+  display: none;
+}
+
+// 覆盖全局文本输入框css
+.el-input__inner {
+  color: $menuActiveText !important;
+  background-color: $subMenuBg !important;
+  border: 1px solid $border !important;
+}
+
+// 覆盖全局日期选择器css
+.el-date-picker {
+  background-color: $subMenuBg !important;
+  border: 1px solid $border !important;
+
+  & .popper__arrow::after {
+    border-bottom-color: $border !important;
+  }
+
+  & td.disabled div {
+    background: transparent;
+  }
+
+  & .el-picker-panel__footer {
+    background: none;
+    border-top: 1px solid #363636;
+    & .el-picker-panel__link-btn {
+      background: $menuShowbox;
+      color: #FFFFFF;
+      border: $menuShowbox;
+    }
+  }
+
+  & .el-date-picker__time-header {
+    border-bottom: $border !important;
+  }
+
+  & .el-picker-panel__footer .el-button--text {
+    display: none;
+  }
+
+  & .el-picker-panel__content .el-date-table th {
+    border-bottom: solid 1px #363636;
+  }
+
+}
+
+// to fixed https://github.com/ElemeFE/element/issues/2461
+.el-dialog {
+  transform: none;
+  left: 0;
+  position: relative;
+  margin: 0 auto;
+}
+
+// 覆盖全局弹窗css
+.el-dialog {
+  background-color: $menuHover !important;
+}
+
+.el-dialog__wrapper {
+  background-color: $dinlog !important;
+}
+
+
+// refine element ui upload
+.upload-container {
+  .el-upload {
+    width: 100%;
+
+    .el-upload-dragger {
+      width: 100%;
+      height: 200px;
+    }
+  }
+}
+
+// dropdown
+.el-dropdown-menu {
+  a {
+    display: block
+  }
+}
+
+// to fix el-date-picker css style
+.el-range-separator {
+  box-sizing: content-box;
+}
+.el-tree-node__expand-icon.is-leaf {
+  visibility: hidden;
+}
+
+//表格内容颜色
+.el-table {
+  color:#b9b9b9;
+  & .el-table tr {
+    background-color: transparent !important;
+  }
+  & .el-table__header th{
+    background-color: $tableHeader !important;
+    height: 38px;
+    color: var(--table-text);
+    border-bottom: none;
+  }
+  & .el-table__body tbody tr.hover-row>td {
+    background-color: transparent !important;
+  }
+  & .el-table__body tbody tr:nth-child(odd) {
+    background-color: #232323;
+  }
+  & .el-table__body tbody tr:nth-child(even) td {
+    background-color: #191919;
+  }
+  & .el-table--striped .el-table__body tr.hover-row.el-table__row--striped td {
+    background: transparent !important;
+  }
+  & .el-table__empty-block{
+    background-color: #232323 !important;
+  }
+}
+
+// ::v-deep .table-wrapper .el-table tr {
+//   background-color: #000 !important;
+// }
+
+.el-form-item__label {
+  color: #d1d1d1;
+}
+
+
+// 分页
+.el-pagination {
+  background-color: #232323 !important;
+  text-align: center;
+}
+
+.el-pagination.is-background .btn-next.disabled, .el-pagination.is-background .btn-next:disabled, .el-pagination.is-background .btn-prev.disabled, .el-pagination.is-background .btn-prev:disabled, .el-pagination.is-background .el-pager li.disabled {
+  background-color: #232323;
+  border: 1px solid #737373;
+}
+
+
+// /*按钮的背景颜色样式*/
+.el-button--info {
+  background-color: #232323;
+  color: #b9b9b9;
+  border: none;
+}
+/*鼠标经过*/
+.el-button--info:hover {
+  background-color: #161616;
+  & span {
+    color: #0080ff!important;
+  }
+}
+/*鼠标按下*/
+.el-button--info:focus {
+  background-color: #161616;
+  & span {
+    color: #0080FF!important;
+  }
+}
+
+// 表格操作列颜色
+
+.blue {
+  &::v-deep span {
+    color: #0080FF !important;
+  }
+}
+.orange {
+  &::v-deep span {
+    color: #FFB200 !important;
+  }
+}
+.red {
+  &::v-deep span {
+    color: #FF0D0D !important;
+  }
+}
+
+.el-radio-group.radio_box {
+  .el-radio-button__inner {
+    border: none;
+    border: 1px solid #313131;
+    background: #161616;
+  }
+  .el-radio-button__orig-radio:checked+.el-radio-button__inner {
+    border: 1px solid #111032;
+    color: #fff !important;
+  }
+  .el-radio-button:first-child .el-radio-button__inner {
+    border-left: 1px solid #313131;
+    border-right: 1px solid #111032;
+  }
+  .el-radio-button__orig-radio:checked+.el-radio-button__inner {
+    background: #0080FF;
+    box-shadow: none;
+  }
+}
+
+// 切换通道树、轮巡组
+.el-radio-group.switch {
+  text-align: center;
+  .el-radio-button{
+    border-radius:4px;
+    .el-radio-button__inner {//修改按钮样式
+      background: #232323;
+      color:#B9B9B9;
+      border: 1px solid #313131 !important;
+    }
+    .el-radio-button__orig-radio:checked + .el-radio-button__inner {// 修改按钮激活样式
+      color: #0080FF!important;
+      background-color: #161616;
+      border-color: #161616;
+      box-shadow: -1px 0 0 0 #161616;
+    }
+  }
+}
+
+// 实时监控的树
+.monitorTree {
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  padding: 11px 0 0 0;
+  background: #232323;
+  border-radius: 0px 0px 0px 0px;
+  opacity: 1;
+  & ::v-deep .el-radio-group {
+    text-align: center;
+  }
+  .el-divider--horizontal {
+    margin: 13px 0;
+    background-color:#363636;
+  }
+  .el-scrollbar__wrap {
+    background-color: #313131;
+    height: 100%;
+  }
+  .el-tree {
+    margin-top: 14px;
+    width: 100%;
+    // height: 460px;
+    background-color: #313131;
+    & ::v-deep .el-tree-node__content {
+      height: 34px;
+    }
+    & ::v-deep .el-tree-node__content:hover,
+    ::v-deep  .el-tree-node.is-current > .el-tree-node__content
+    {
+      background: #4E4E4E;
+      & span {
+        color: #fff!important;
+      }
+    }
+  }
+  .text_hide {
+    width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+// 实时监控的控制台
+.video_control_Bg {
+  background: #313131;
+}
+
+// 树的颜色
+.el-tree.treeBg {
+  background: #232323;
+  border: 1px solid #707070;
+  & .el-tree-node__content {
+    height: 40px!important;
+    background-color: #313131;
+    margin-bottom: 2px;
+  }
+  & .el-tree-node > .el-tree-node__content:hover{
+    background-color: #4E4E4E;
+  }
+  & .el-tree-node.is-current > .el-tree-node__content{
+    background-color: #4E4E4E;
+  }
+  & .el-tree-node__label {
+    font-size: 16px;
+  }
+}
+
+// 卡片的颜色
+.cardBg {
+  background-color: #161616;
+}
+
+// 资源卡片背景
+.sourceBg {
+  background: #232323;
+  p, span {
+    color: #FFFFFF !important;
+  }
+}
+
+// 普通card背景
+.ordinaryBg {
+  background: #232323;
+}
+
+// 实时告警卡片及字体
+.waringCard {
+  background: #232323;
+  box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.16);
+  .arrow {
+    color: #fff;
+  }
+  .item {
+    position: relative;
+    align-items: center;
+    padding: 0 50px;
+    &::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #333558;
+    }
+    .t1 {
+      color: #dcddff;
+    }
+    .t2 {
+      color:#4eb2ff;
+    }
+  }
+}
+.info_title {
+  color: #b9b9b9 !important;
+}
+.info_span {
+  color: #fff !important;
+}
+.top_main {
+  height: 50px;
+  background: #313131;
+  display: flex;
+  align-items: center;
+}
