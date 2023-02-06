@@ -112,7 +112,7 @@ export default {
       this.factoryTypeList = getDict('factory_type')
     },
     init() {
-      getModelList(this.params).then((res) => {
+      getModelList({ ...this.params, ...this.searchOption }).then((res) => {
         const list = res.data.records || []
         // listProcess(list, {
         //   numberTypeList: this.numberTypeList,

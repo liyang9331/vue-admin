@@ -3,7 +3,7 @@
   <div class="equipment">
     <el-form ref="form" class="search-form" :model="form" :inline="true">
       <template v-for="(item, key) in formItemList">
-        <!-- 预置：文本输入框 -->
+        <!-- 预置：输入框 -->
         <el-form-item
           v-if="item.type == 'input'"
           :key="key"
@@ -11,16 +11,21 @@
         >
           <el-input
             v-model="form[item.model]"
+            :type="item.inputType"
             :placeholder="item.placeholder"
           />
         </el-form-item>
-        <!-- 预置：下拉选择框-单选 -->
+        <!-- 预置：选择器 -->
         <el-form-item
           v-if="item.type == 'select'"
           :key="key"
           :label="item.label"
         >
-          <el-select v-model="form[item.model]" :placeholder="item.placeholder">
+          <el-select
+            v-model="form[item.model]"
+            :placeholder="item.placeholder"
+            :multiple="item.multiple"
+          >
             <el-option
               v-for="item in item.option"
               :key="item.dictValue"
@@ -29,7 +34,7 @@
             />
           </el-select>
         </el-form-item>
-        <!-- 预置：树形选择器 -->
+        <!-- 预置：树形控件 -->
         <el-form-item v-if="item.type == 'tree'" :key="key" :label="item.label">
           <treeselect
             v-model="form[item.model]"
@@ -39,6 +44,57 @@
             :options="item.data"
             :normalizer="normalizer"
           />
+        </el-form-item>
+        <!-- 预置：时间选择器 -->
+        <el-form-item
+          v-if="item.type == 'TimePicker'"
+          :key="key"
+          :label="item.label"
+        >
+          <el-time-select
+            v-model="form[item.model]"
+            :picker-options="{
+              start: '00:00',
+              step: '00:60',
+              end: '23:59',
+            }"
+            placeholder="选择时间"
+          />
+        </el-form-item>
+        <!-- 预置：日期选择器 -->
+        <el-form-item
+          v-if="item.type == 'DatePicker'"
+          :key="key"
+          :label="item.label"
+        >
+          <el-date-picker
+            v-model="form[item.model]"
+            type="date"
+            placeholder="选择日期"
+          />
+        </el-form-item>
+        <!-- 预置：时间日期时间段选择器 -->
+        <el-form-item
+          v-if="item.type == 'DateTimePicker'"
+          :key="key"
+          :label="item.label"
+        >
+          <el-date-picker
+            v-model="form[item.model]"
+            type="datetimerange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          />
+        </el-form-item>
+        <!-- 预置：文本 -->
+        <el-form-item
+          v-if="item.type == 'text'"
+          :key="key"
+          :label="item.label"
+          :prop="item.model"
+        >
+          <p :style="item.style">{{ form[item.model] }}</p>
         </el-form-item>
       </template>
       <el-form-item label="">
@@ -60,7 +116,7 @@ export default {
   name: 'Search',
   data() {
     return {
-      // -----组件内置变量-----
+      // ----- 内部赋值变量 -----
       loading: false, // 查询按钮是否加载中
       normalizer(node) {
         return {
@@ -71,7 +127,7 @@ export default {
       },
       // ----- end ------
 
-      // -----外部赋值变量-----
+      // ----- 外部赋值变量 -----
       formItemList: Search.formItemList,
       form: Search.model()
       // ----- end -----
