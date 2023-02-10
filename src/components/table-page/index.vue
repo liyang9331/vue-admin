@@ -38,6 +38,11 @@
               <!-- v-if="scope.row.isAccess == '1'" -->
               <el-button
                 type="text"
+                class="blue"
+                @click="handleTinymce(scope.row)"
+              >详情</el-button>
+              <el-button
+                type="text"
                 class="orange"
                 @click="toEdit(scope.row)"
               >编辑</el-button>
@@ -62,25 +67,29 @@
       @pagination="pagination"
     />
     <edit :cur-info="curInfo" :flag="flag" @reset="reset" />
+    <tinymce v-if="tinymceShow" :content="tinymceContent" @cancel="(data)=>{tinymceShow=data}" />
   </div>
 </template>
 
 <script>
 import { columns, listProcess } from './const'
-import listMixin from '@/mixins/list'
+import tableMixins from './mixins/tableMixins'
 import search from './components/search.vue'
 import edit from './components/edit.vue'
 import { getModelList } from '@/api/algorithmModel'
 import { getDict } from '@/api/dict.js'
 import { downloadFile } from '@/utils/download'
 import { mapGetters } from 'vuex'
-
+import { objectEmpty } from '@/utils/index'
+import tinymce from './components/tinymce.vue'
+import { deletionAlgorithmModel } from '@/api/algorithmModel'
 export default {
   components: {
     search,
-    edit
+    edit,
+    tinymce
   },
-  mixins: [listMixin],
+  mixins: [tableMixins],
   data() {
     return {
       actionpos: 'after',
@@ -112,8 +121,8 @@ export default {
       this.factoryTypeList = getDict('factory_type')
     },
     init() {
-      getModelList({ ...this.params, ...this.searchOption }).then((res) => {
-        const list = res.data.records || []
+      getModelList({ ...this.params, ...objectEmpty(this.searchOption) }).then((res) => {
+        const list = res.data.list || []
         // listProcess(list, {
         //   numberTypeList: this.numberTypeList,
         //   factoryTypeList: this.factoryTypeList
@@ -125,7 +134,7 @@ export default {
     toDelete(row) {
       const params = { id: row.id }
       this.$confirm(
-        '设备删除后，设备列表及电子地图中，都不再显示此设备。确定删除吗？',
+        '确定删除吗？',
         ' ',
         {
           confirmButtonText: '确定',
@@ -134,8 +143,8 @@ export default {
           center: true
         }
       ).then(() => {
-        deletedEquip(params).then((res) => {
-          if (res.status == 200) {
+        deletionAlgorithmModel(params).then((res) => {
+          if (res.status === 200) {
             this.$message.success('删除成功')
             this.init()
           }

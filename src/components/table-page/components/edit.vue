@@ -3,7 +3,7 @@
   <el-dialog
     :title="editText"
     :visible.sync="visible"
-    width="700px"
+    width="900px"
     :close-on-click-modal="false"
     @close="cancel"
   >
@@ -27,8 +27,24 @@
         >
           <el-input
             v-model="form[item.model]"
+            :type="item.inputType"
             :disabled="item.disabled"
             :placeholder="item.placeholder"
+            :rows="item.rows ? item.rows : 6"
+            clearable
+          />
+        </el-form-item>
+        <!-- 富文本编辑器 -->
+        <el-form-item
+          v-if="item.type == 'RichText'"
+          :key="key"
+          :label="item.label"
+          :prop="item.model"
+        >
+          <VueTinymce
+            v-model="form[item.model]"
+            :setup="setup"
+            :setting="setting"
           />
         </el-form-item>
         <!-- 预置：选择器 -->
@@ -49,7 +65,12 @@
           </el-select>
         </el-form-item>
         <!-- 预置：树形控器 -->
-        <el-form-item v-if="item.type == 'tree'" :key="key" :label="item.label" :prop="item.model">
+        <el-form-item
+          v-if="item.type == 'tree'"
+          :key="key"
+          :label="item.label"
+          :prop="item.model"
+        >
           <treeselect
             v-model="form[item.model]"
             :disabled="item.disabled"
@@ -61,18 +82,45 @@
           />
         </el-form-item>
         <!-- 预置：文件上传 -->
-        <el-form-item v-if="item.type == 'upload'" :key="key" :label="item.label" :prop="item.model">
+        <el-form-item
+          v-if="item.type == 'upload'"
+          :key="key"
+          :label="item.label"
+          :prop="item.model"
+        >
           <el-upload
+            ref="upload"
             class="upload-demo mr10"
-            action="#"
-            :auto-upload="true"
+            action=""
+            :multiple="false"
+            :limit="1"
+            :auto-upload="false"
             :show-file-list="false"
+            :file-list="fileList"
             :disabled="item.disabled"
-            :http-request="(data)=>{item.httpRequest(data,form,item.model)}"
+            :on-change="
+              (file, files) => {
+                fileList = files;
+                item.fileChange(file, form, item.model);
+              }
+            "
           >
             <el-button slot="trigger" type="info" class="textBtn">
               <i class="el-icon-upload">上传</i>
             </el-button></el-upload>
+          <!-- 文件列表 -->
+          <div class="file-list">
+            <span v-for="(item, index) in fileList" :key="item.url">
+              <el-link
+                class="file-link"
+                :underline="false"
+                icon="el-icon-link"
+                type="primary"
+                :href="item.url"
+                target="_blank"
+              >{{ item.name }}</el-link>
+            </span>
+          </div>
         </el-form-item>
       </template>
       <!-- template end -->
@@ -88,9 +136,9 @@
 import { Form } from '../const'
 // mixinsInit 是表单的混合初始化
 import mixinsInit from '../mixins/dialogFormMixins'
-
 const mixins = mixinsInit({
   defaultText: Form.text,
+  formItemList: Form.formItemList,
   formInit: Form.model,
   rules: Form.rules,
   apiMap: {
@@ -103,8 +151,27 @@ export default {
   mixins: [mixins],
   data() {
     return {
+      setting: {
+        height: 400,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+      },
+      fileList: [],
       // ----- 内部赋值变量 -----
       formItemList: Form.formItemList,
+      normalizer(node) {
+        return {
+          id: node.id,
+          label: node.label,
+          children: node.children && node.children.length ? node.children : 0
+        }
+      },
       // ----- end ------
 
       // ----- 外部赋值变量 -----
@@ -114,9 +181,12 @@ export default {
     }
   },
   computed: {},
-  mounted() {
-  },
+  mounted() {},
+  beforeDestroy() {},
   methods: {
+    setup(editor) {
+      console.log(editor)
+    }
   }
 }
 </script>

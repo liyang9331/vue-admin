@@ -1,6 +1,7 @@
 export default function EditMixinFactory(option) {
   let {
     defaultText = '',
+    formItemList,
     formInit,
     apiMap,
     rules = {}
@@ -17,7 +18,8 @@ export default function EditMixinFactory(option) {
       return {
         form: formInit(),
         visible: false,
-        rules
+        rules,
+        formItemList
       }
     },
     computed: {
@@ -62,19 +64,24 @@ export default function EditMixinFactory(option) {
       confrim() {
         const api = apiMap[this.flag]
         this.$refs['form'].validate(valid => {
-          if (this.form.status == '') {
-            this.form.status = 2
-          } else {
+          // if (this.form.status == '') {
+          //   this.form.status = 2
+          // } else {
 
-          }
+          // }
           const params = {
             ...this.form
           }
           if (valid) {
             api(params).then((res) => {
-              if (res.status == 200) {
+              if (res.status === 200) {
                 this.$message.success('操作成功')
                 this.reset(true, res)
+                this.formItemList.forEach(element => {
+                  if (element.type === 'upload') {
+                    this.fileList = []
+                  }
+                })
               } else {
                 this.$message.warning(res.message)
               }

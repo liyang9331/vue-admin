@@ -13,6 +13,7 @@
             v-model="form[item.model]"
             :type="item.inputType"
             :placeholder="item.placeholder"
+            clearable
           />
         </el-form-item>
         <!-- 预置：选择器 -->
@@ -38,63 +39,12 @@
         <el-form-item v-if="item.type == 'tree'" :key="key" :label="item.label">
           <treeselect
             v-model="form[item.model]"
-            style="width: 100%"
+            style="width: 150px"
             :placeholder="item.placeholder"
             :multiple="false"
             :options="item.data"
             :normalizer="normalizer"
           />
-        </el-form-item>
-        <!-- 预置：时间选择器 -->
-        <el-form-item
-          v-if="item.type == 'TimePicker'"
-          :key="key"
-          :label="item.label"
-        >
-          <el-time-select
-            v-model="form[item.model]"
-            :picker-options="{
-              start: '00:00',
-              step: '00:60',
-              end: '23:59',
-            }"
-            placeholder="选择时间"
-          />
-        </el-form-item>
-        <!-- 预置：日期选择器 -->
-        <el-form-item
-          v-if="item.type == 'DatePicker'"
-          :key="key"
-          :label="item.label"
-        >
-          <el-date-picker
-            v-model="form[item.model]"
-            type="date"
-            placeholder="选择日期"
-          />
-        </el-form-item>
-        <!-- 预置：时间日期时间段选择器 -->
-        <el-form-item
-          v-if="item.type == 'DateTimePicker'"
-          :key="key"
-          :label="item.label"
-        >
-          <el-date-picker
-            v-model="form[item.model]"
-            type="datetimerange"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-          />
-        </el-form-item>
-        <!-- 预置：文本 -->
-        <el-form-item
-          v-if="item.type == 'text'"
-          :key="key"
-          :label="item.label"
-          :prop="item.model"
-        >
-          <p :style="item.style">{{ form[item.model] }}</p>
         </el-form-item>
       </template>
       <el-form-item label="">

@@ -1,7 +1,7 @@
 /**
  * 自定义字典
  */
-export const usage_status = [{ dictValue: 1, dictLabel: '禁用' }, { dictValue: 0, dictLabel: '启用' }]
+export const usage_status = [{ dictValue: '1', dictLabel: '禁用' }, { dictValue: '0', dictLabel: '启用' }]
 
 /**
  * 搜索组件依赖数据抽象
@@ -10,9 +10,9 @@ export const Search = {
   // el-form的model
   model: (data = {}) => {
     return {
-      name: '',
-      number: '',
-      status: null,
+      code: '', // 编号
+      name: '', // 名称
+      status: '', // 状态 0启用，1禁用
       ...data
     }
   },
@@ -23,30 +23,18 @@ export const Search = {
  *  输入框-input   -- 私有参数 @param {inputType:"textarea || text"} 其他类型请参考：https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types
  *  选择器-select   -- 私有参数 @param {option:"选择器的数据源",multiple:"是否多选"}
  *  树形控件-tree -- 私有参数 @param {data:"展示数据"}
- *  时间选择器-TimePicker -- 私有参数 @param {}
- *  日期选择器-DatePicker -- 私有参数 @param {}
- *  时间日期时间段选择器-DateTimePicker -- 私有参数 @param {}
- *  *  文本-text --私有参数 @param {}
  *  */
   formItemList: [
     {
-      type: 'input', inputType: 'text', model: 'number', label: '任务编号', placeholder: '请输入任务编号',
+      type: 'input', inputType: 'text', model: 'code', label: '算法编号', placeholder: '请输入算法编号',
       disabled: false
     },
     {
-      type: 'input', inputType: 'text', model: 'name', label: '任务名称', placeholder: '请输入任务名称',
+      type: 'input', inputType: 'text', model: 'name', label: '算法名称', placeholder: '请输入算法名称',
       disabled: false
     },
     {
-      type: 'input', inputType: 'text', model: 'name', label: '执行设备', placeholder: '请输入执行设备',
-      disabled: false
-    },
-    {
-      type: 'input', inputType: 'text', model: 'name', label: '执行算法', placeholder: '请输入执行算法',
-      disabled: false
-    },
-    {
-      type: 'select', model: 'status', label: '任务状态', placeholder: '请选择任务状态',
+      type: 'select', model: 'status', label: '使用状态', placeholder: '请选择使用状态',
       disabled: false,
       multiple: false,
       option: usage_status
@@ -58,25 +46,22 @@ export const Search = {
  * 表格表头-字段、自定义渲染
  */
 export const columns = [
-  { label: '任务编号', prop: 'deviceCode' },
-  { label: '任务名称', prop: 'deviceName' },
-  { label: '执行设备', prop: 'ip' },
-  { label: '执行通道', prop: 'channel_text' },
-  { label: '执行算法', prop: 'groupName' },
-  { label: '执行周期', prop: 'groupName' },
-  { label: '创建时间', prop: 'groupName' },
+  { label: '算法编号', prop: 'code' },
+  { label: '算法名称', prop: 'name' },
+  { label: '版本', prop: 'version' },
+  // { label: '算法描述', prop: 'description',
+  // },
+  { label: '更新时间', prop: 'updateTime' },
   {
-    label: '状态', prop: 'status',
+    label: '使用状态', prop: 'status',
     component: {
       functional: true,
       render(_, context) {
         const status = context.props.context.status
-        if (status == '1') {
-          return <div class='blue'><span><i class='el-icon-success' style='margin-right:10px' />执行中</span></div>
-        } else if (status == '2') {
-          return <div class='gray'><span><i class='el-icon-error' style='margin-right:10px' />未启用</span></div>
-        } else {
-          return <div class='red'><span><i class='el-icon-error' style='margin-right:10px' />已结束</span></div>
+        if (status == '0') {
+          return <div class='blue'><span><i class='el-icon-success' style='margin-right:10px' />启用</span></div>
+        } else if (status == '1') {
+          return <div class='gray'><span><i class='el-icon-error' style='margin-right:10px' />禁用</span></div>
         }
       }
     }
@@ -89,19 +74,19 @@ export const columns = [
  * @returns
  */
 import { addAlgorithmModel, editAlgorithmModel } from '@/api/algorithmModel'
+import store from '@/store'
 export const Form = {
   // el-form的model
   text: '算法模型', // 表单头部标题
   model: (data = {}) => {
     return {
-      df: '', // 算法编号
-      algorithmName: '', // 算法名称
-      algorithmVersion: '', // 算法版本
-      algorithmDescription: '', // 算法描述
-      algorithmStatus: null, // 使用状态
-      modelFile: null, // 算法模型
-      userId: null, // 用户id
-      date: [],
+      code: '', // 编号
+      description: '', // 描述
+      modelFile: '', // 模型文件
+      name: '', // 名称
+      status: '', // 状态 0启用，1禁用
+      userId: store.state.user.userInfo.id, // 用户id
+      version: '', // 版本
       ...data
     }
   },
@@ -110,11 +95,44 @@ export const Form = {
  * 支持类型：
  *  公共参数 @param {type: '类型', model: '绑定的字段名', label: 'label', placeholder: 'a',disabled:"修改是否禁用"}
  *  输入框-input   -- 私有参数 @param {inputType:"textarea || text"} 其他类型请参考：https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types
+ *  富文本-RichText   -- 私有参数 @param {}
  *  选择器-select   -- 私有参数 @param {option:"选择器的数据源",multiple:"是否多选"}
  *  树形控件-tree -- 私有参数 @param {data:"展示数据"}
  *  文件上传-upload --私有参数 @param {}
  *  */
   formItemList: [
+    {
+      type: 'input', inputType: 'text', model: 'code', label: '算法编号', placeholder: '请输入算法编号',
+      disabled: false
+    },
+    {
+      type: 'input', inputType: 'text', model: 'name', label: '算法名称', placeholder: '请输入算法名称',
+      disabled: false
+    },
+    {
+      type: 'input', inputType: 'text', model: 'version', label: '算法版本', placeholder: '请输入算法版本',
+      disabled: false
+    },
+    {
+      type: 'RichText', model: 'description', label: '算法描述', placeholder: '请输入算法描述',
+      disabled: false
+    },
+    {
+      type: 'select', model: 'status', label: '使用状态', placeholder: '请选择使用状态',
+      disabled: false,
+      multiple: false,
+      option: usage_status
+    },
+    {
+      type: 'upload', model: 'modelFile', label: '算法模型', placeholder: '请上传算法模型',
+      disabled: false,
+      // 文件选择
+      fileChange: (file = null, form, model) => {
+        if (file !== null) {
+          form[model] = file.raw
+        }
+      }
+    }
   ],
   /**
    * 添加、编辑-表单过滤
@@ -131,11 +149,11 @@ export const Form = {
       }],
    */
   rules: {
-    algorithmNumber: [{ required: true, message: '请选择输入算法编号' }],
-    algorithmName: [{ required: true, message: '请输入算法名称' }, { max: 100, message: '最长 100 个字符', trigger: 'blur' }],
-    algorithmVersion: [{ required: true, message: '请输入算法版本' }],
-    algorithmDescription: [{ required: true, message: '请输入算法描述' }],
-    algorithmStatus: [{ required: true, message: '请选择使用状态' }],
+    code: [{ required: true, message: '请选择输入算法编号' }, { max: 50, message: '最长 50 个字符', trigger: 'blur' }],
+    name: [{ required: true, message: '请输入算法名称' }, { max: 100, message: '最长 100 个字符', trigger: 'blur' }],
+    version: [{ required: true, message: '请输入算法版本' }],
+    description: [{ required: true, message: '请输入算法描述' }],
+    status: [{ required: true, message: '请选择使用状态' }],
     modelFile: [{ required: true, message: '请选择算法模型' }]
   },
   /**
@@ -160,13 +178,3 @@ export function listProcess(list, option) {
     item['factory_text'] = item.factory != null ? typeof (factory) === 'object' ? factory.dictLabel : '' : ''
   })
 }
-
-/**
- * 编辑、添加任务调度-设备信息-表格表头-字段、自定义渲染
- */
-export const deviceColumns = [
-  { label: '设备编号', prop: 'deviceCode' },
-  { label: '设备名称', prop: 'deviceName' },
-  { label: '设备区域', prop: 'ip' },
-  { label: 'IP地址', prop: 'channel_text' }
-]
