@@ -11,9 +11,25 @@
         >
           <el-input
             v-model="form[item.model]"
+            :disabled="item.disabled"
             :type="item.inputType"
             :placeholder="item.placeholder"
             clearable
+          />
+        </el-form-item>
+        <!-- 预置：远程搜索 -->
+        <el-form-item
+          v-if="item.type == 'remoteSearch'"
+          :key="key"
+          :label="item.label"
+        >
+          <el-autocomplete
+            v-model="otherModel[item.otherModel]"
+            clearable
+            :disabled="item.disabled"
+            :fetch-suggestions="(queryString, cb)=>{item.querySearchAsync(queryString, cb,form,item)}"
+            :placeholder="item.placeholder"
+            @select="(data)=>{item.handleSelect(data,form,item)}"
           />
         </el-form-item>
         <!-- 预置：选择器 -->
@@ -24,6 +40,8 @@
         >
           <el-select
             v-model="form[item.model]"
+            clearable
+            :disabled="item.disabled"
             :placeholder="item.placeholder"
             :multiple="item.multiple"
           >
@@ -39,11 +57,26 @@
         <el-form-item v-if="item.type == 'tree'" :key="key" :label="item.label">
           <treeselect
             v-model="form[item.model]"
+            clearable
+            :disabled="item.disabled"
             style="width: 150px"
             :placeholder="item.placeholder"
             :multiple="false"
             :options="item.data"
             :normalizer="normalizer"
+          />
+        </el-form-item>
+        <!-- 预置：日期世间选择器 -->
+        <el-form-item v-if="item.type === 'dateTimePicker'" :key="key" :label="item.label">
+          <el-date-picker
+            v-model="otherModel[item.model]"
+            is-range
+            range-separator="至"
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
+            placeholder="选择时间范围"
+            popper-class="time-interval-popper"
+            @change="(value)=>{item.change(value,form,item)}"
           />
         </el-form-item>
       </template>
@@ -79,8 +112,9 @@ export default {
 
       // ----- 外部赋值变量 -----
       formItemList: Search.formItemList,
-      form: Search.model()
+      form: Search.model(),
       // ----- end -----
+      otherModel: Search.otherModel()
     }
   },
   computed: {},
